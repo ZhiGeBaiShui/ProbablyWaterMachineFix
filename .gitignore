@@ -1,0 +1,18 @@
+# ── 构建产物（不属于工程文件）──
+bin/
+obj/
+
+# ── 正式输出：dll 产物与发版产物 ──
+正式输出/
+
+# ── IDE / 编辑器配置 ──
+.idea/
+.vs/
+.vscode/
+*.user
+*.suo
+
+# ── .NET / NuGet ──
+*.nupkg
+*.snupkg
+project.lock.json
