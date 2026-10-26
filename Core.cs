@@ -9,9 +9,9 @@ namespace ProbablyWaterMachineFix
 {
     // 水分收集器水量修复（补丁 mod）。
     //
-    // 各修复分散在同目录的独立文件里维护，本文件只做入口：
-    //   · MoistureFarmOutputVolumeFix.cs —— 修复①：GetOutputVolume 的 32 位溢出（≈21.47 L 归零）
-    //   · WaterHelperAddWater.cs         —— AddWater 等价复制 + 拦截（为"6000 mL 上限"预留）
+    // 各修复按「大类/小类/类名」分层放在 Fixes/ 下维护，本文件只做入口：
+    //   · Fixes/Water/MoistureFarmOutputVolumeFix    —— 修复①：GetOutputVolume 的 32 位溢出（≈21.47 L 归零）
+    //   · Fixes/Water/MoistureFarmOutputContainerFix —— 修复②：Fill 的临时容器改用目标容器的 id（容量一致）
     internal class Core : MelonMod
     {
         public override void OnInitializeMelon()
