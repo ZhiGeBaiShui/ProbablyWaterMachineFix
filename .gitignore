@@ -5,6 +5,9 @@ obj/
 # ── 正式输出：dll 产物与发版产物 ──
 正式输出/
 
+# ── steamcmd 发版目录（纯 ASCII 路径，避免中文路径传给 steamcmd 出错）──
+dist/
+
 # ── 智能体工作数据（非工程文件）──
 .workbuddy-ai/
 
