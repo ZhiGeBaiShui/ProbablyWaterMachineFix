@@ -1,29 +1,27 @@
 using HarmonyLib;
-using Il2Cpp;
 
 namespace ProbablyWaterMachineFix.Fixes.Water
 {
-    // 修复①：原版 MachineMoistureFarm.GetOutputVolume 的 32 位溢出。
+    // 修复①：原版 MachineMoistureFarm.GetOutputVolume 的 32 位乘法溢出。
     //
-    // 原版实现（ISIL 实证，WaterHelper/MachineMoistureFarm 数据集）：
+    // 原版实现：
     //   int bonus = MachineryHelper.GetCurrentPerformanceBonus(gameItem);
-    //   return Math.Max((bonus + 100) * 1_000_000 / 100, 0);
-    // 其中 (bonus + 100) * 1_000_000 是 32 位乘法：
-    //   bonus >= 2048 时超出 int32 → 结果变负 → 被 Math.Max 钳成 0
-    //   → 表现：水分收集器产量"归零"（临界产量 21.47 L，与玩家反馈"20 L 左右"吻合）。
+    //   return Math.Max(850000 * (100 + bonus) / 100, 0);
+    // 850000 * (100 + bonus) 是 int 乘法，bonus >= 2427 时超出 int32 → 变负 → 被 Math.Max 钳成 0
+    //   → 表现：产量超过 21.47 L 直接归零。
     //
-    // 修法：改用 64 位运算的等价式 ×10,000（不再经过被放大的中间量），
-    //       超出 int 上限（2147.48 L，同时就是水量存储的极限）时饱和到 int.MaxValue，
-    //       而不是像原版那样回绕成负数、被 Math.Max 钳成 0。
+    // 修法：同一个式子改用 64 位算，超出上限时饱和而不是回绕。
+    //       饱和值取 2147483520 而不是 int.MaxValue：产量之后还要过 ApplySharedAir 的 float 除法，
+    //       而 (float)int.MaxValue 会舍入到 2^31，(int)Math.Round 强转回来变成 int.MinValue（负数），
+    //       等于又归 0。2147483520 是 float 能精确表示的最大 int32，过这一关不会回绕。
     [HarmonyPatch(typeof(MachineMoistureFarm), nameof(MachineMoistureFarm.GetOutputVolume))]
-    [HarmonyWrapSafe]
     internal static class OutputVolumeHook
     {
         private static bool Prefix([HarmonyArgument(0)] GameItem gameItem, ref int __result)
         {
             int bonus = MachineryHelper.GetCurrentPerformanceBonus(gameItem);
-            long v = ((long)bonus + 100) * 10000;
-            __result = v > int.MaxValue ? int.MaxValue : (int)System.Math.Max(v, 0);
+            long volume = 850000L * ((long)bonus + 100) / 100;
+            __result = (int)System.Math.Clamp(volume, 0, 2147483520L);
             return false;
         }
     }

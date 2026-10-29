@@ -1,61 +1,41 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
     <LangVersion>latest</LangVersion>
-    <Nullable>disable</Nullable>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <AssemblyName>ProbablyWaterMachineFix</AssemblyName>
     <RootNamespace>ProbablyWaterMachineFix</RootNamespace>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <GenerateDependencyFile>false</GenerateDependencyFile>
   </PropertyGroup>
 
   <PropertyGroup>
-    <MelonLoaderDir Condition="'$(MelonLoaderDir)' == ''">E:\SteamLibrary\steamapps\common\Probably Stolen Demo\MelonLoader</MelonLoaderDir>
-    <MelonLoaderNet6Dir Condition="'$(MelonLoaderNet6Dir)' == ''">$(MelonLoaderDir)\net6</MelonLoaderNet6Dir>
-    <MelonLoaderIl2CppDir Condition="'$(MelonLoaderIl2CppDir)' == ''">$(MelonLoaderDir)\Il2CppAssemblies</MelonLoaderIl2CppDir>
-    <GameDir Condition="'$(GameDir)' == ''">E:\SteamLibrary\steamapps\common\Probably Stolen Demo</GameDir>
+    <GameDir Condition="'$(GameDir)' == ''">E:\SteamLibrary\steamapps\common\Probably Stolen</GameDir>
+    <ManagedDir>$(GameDir)\Probably Stolen_Data\Managed</ManagedDir>
   </PropertyGroup>
 
   <ItemGroup>
-    <Reference Include="MelonLoader">
-      <HintPath>$(MelonLoaderNet6Dir)\MelonLoader.dll</HintPath>
-      <Private>false</Private>
-    </Reference>
-    <Reference Include="0Harmony">
-      <HintPath>$(MelonLoaderNet6Dir)\0Harmony.dll</HintPath>
-      <Private>false</Private>
-    </Reference>
-    <Reference Include="Il2CppInterop.Common">
-      <HintPath>$(MelonLoaderNet6Dir)\Il2CppInterop.Common.dll</HintPath>
-      <Private>false</Private>
-    </Reference>
-    <Reference Include="Il2CppInterop.Runtime">
-      <HintPath>$(MelonLoaderNet6Dir)\Il2CppInterop.Runtime.dll</HintPath>
-      <Private>false</Private>
-    </Reference>
-    <Reference Include="Il2Cppmscorlib">
-      <HintPath>$(MelonLoaderIl2CppDir)\Il2Cppmscorlib.dll</HintPath>
-      <Private>false</Private>
-    </Reference>
-    <Reference Include="Il2CppSystem">
-      <HintPath>$(MelonLoaderIl2CppDir)\Il2CppSystem.dll</HintPath>
-      <Private>false</Private>
-    </Reference>
     <Reference Include="Assembly-CSharp">
-      <HintPath>$(MelonLoaderIl2CppDir)\Assembly-CSharp.dll</HintPath>
+      <HintPath>$(ManagedDir)\Assembly-CSharp.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine">
-      <HintPath>$(MelonLoaderIl2CppDir)\UnityEngine.dll</HintPath>
+      <HintPath>$(ManagedDir)\UnityEngine.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
-      <HintPath>$(MelonLoaderIl2CppDir)\UnityEngine.CoreModule.dll</HintPath>
+      <HintPath>$(ManagedDir)\UnityEngine.CoreModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
+    <Reference Include="0Harmony">
+      <HintPath>$(ManagedDir)\0Harmony.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="manifest.xml" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
 </Project>
