@@ -1,7 +1,10 @@
 # Bug 报告：水分收集器的产出上限
 
 **游戏版本：** 0.46（正式版，Mono）
+
 **涉及类：** `MachineMoistureFarm`
+
+**详细修复mod代码的github链接：https://github.com/ZhiGeBaiShui/ProbablyWaterMachineFix**
 
 ## 摘要
 
