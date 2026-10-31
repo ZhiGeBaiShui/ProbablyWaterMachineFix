@@ -27,7 +27,7 @@ public static int GetOutputVolume(GameItem gameItem)
 int bonus = MachineryHelper.GetCurrentPerformanceBonus(gameItem);
 long volume = 850000L * ((long)bonus + 100) / 100; // 计算公式与850000 * (100 + currentPerformanceBonus) / 100等价
 return (int)Math.Clamp(volume, 0, 2147483520L); // 溢出的冗余判断，溢出了采用最大值而不是静默归零
-// 不采用Math.Clamp(volume, 0, int.MaxValue)是因为(int) (float) 2147483647 = 2147483648，GetOutputVolume返回的产水量int会经过float转换后再回转成int，直接调用上限会出现溢出错误
+// 不采用Math.Clamp(volume, 0, int.MaxValue)是因为(int) (float) 2147483647 = -2147483648，GetOutputVolume返回的产水量int会经过float转换后再回转成int，直接调用上限会出现溢出错误
 ```
 
 ## 问题 2：`Fill` 固定 6000 mL 中转容器
