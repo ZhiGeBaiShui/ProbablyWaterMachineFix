@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Manifest>
   <ID>probably_water_machine_fix</ID>
-  <Name>ProbablyWaterMachineFix</Name>
+  <Name>可能是水分收集修复</Name>
   <Author>ZhiGeBaiShui</Author>
   <ModVersion>2.0.0</ModVersion>
   <Description>修复水分收集器的两个产出上限：产量过 21.47L 会归零、产量被 6L 中转容器卡住。</Description>
